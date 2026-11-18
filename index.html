@@ -1,0 +1,1078 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex">
+<meta name="theme-color" content="#0e0d0c">
+<title>Покупки</title>
+<meta property="og:title" content="Покупки">
+<meta property="og:description" content="Вещи, которые я хочу купить">
+<meta property="og:image" content="https://dmitrymednov.github.io/shop_list/images/aoao.jpg">
+<meta property="og:url" content="https://dmitrymednov.github.io/shop_list/">
+<meta property="og:type" content="website">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 40'%3E%3Ccircle cx='20' cy='20' r='18' fill='none' stroke='%23ff5a1f' stroke-width='4'/%3E%3Ccircle cx='26' cy='20' r='8' fill='%23ff5a1f'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=Inter+Tight:wght@500;600&display=swap&subset=cyrillic">
+<style>
+/* Layout: one-screen hero (statement over a WebGL photo tunnel), then a quiet catalogue grid, all on warm near-black */
+:root{
+  --bg:#0e0d0c; --paper:#1a1917; --ink:#f2f0eb; --muted:#a8a49b; --dim:#77736b;
+  --line:rgb(242 240 235 / .12); --accent:#ff5a1f; --ok:#3ccf7a;
+  --display:'Inter Tight',Inter,-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
+  --body:Inter,-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
+  --gutter:clamp(1.25rem,.9rem + 1.6vw,2.5rem);
+  --ease:cubic-bezier(.2,.7,.2,1); --ease-hover:cubic-bezier(.625,.05,0,1);
+  --radius:.625rem;
+  color-scheme:dark;
+}
+*,*::before,*::after{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:400 1rem/1.5 var(--body);-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
+a{color:inherit;text-decoration:none}
+:focus-visible{outline:2px solid var(--ink);outline-offset:3px;border-radius:4px}
+.pad{padding-left:max(var(--gutter),env(safe-area-inset-left,0px));padding-right:max(var(--gutter),env(safe-area-inset-right,0px))}
+
+.hero{position:relative;isolation:isolate;display:flex;flex-direction:column;height:calc(100svh - env(safe-area-inset-top,0px) - env(safe-area-inset-bottom,0px));min-height:36rem;max-height:62rem;overflow:hidden}
+.nav{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:1.5rem;padding-block:1.25rem}
+.brand{display:inline-flex;align-items:center;gap:.7rem;justify-self:start;font:500 1.1875rem/1 var(--display)}
+.brand-mark{width:1.75rem;height:1.75rem;flex:none;transition:transform .6s var(--ease-hover)}
+.links{display:flex;gap:.125rem;margin:0;padding:0;list-style:none}
+.links a{display:block;padding:.5rem .85rem;border-radius:var(--radius);color:var(--muted);transition:color .3s ease-out}
+.nav-end{justify-self:end;display:flex;align-items:center;gap:1.25rem}
+.status{display:inline-flex;align-items:center;gap:.5rem;font-size:.9375rem;color:var(--muted);white-space:nowrap}
+.status::before{content:'';width:.4375rem;height:.4375rem;border-radius:50%;background:var(--ok);box-shadow:0 0 0 3px rgb(60 207 122 / .18)}
+
+.btn{position:relative;isolation:isolate;display:inline-flex;align-items:center;justify-content:center;gap:.5rem;min-height:3rem;padding:0 1.5rem;border-radius:var(--radius);font:500 1rem/1 var(--body);white-space:nowrap;color:var(--bg)}
+.btn-bg{position:absolute;inset:0;z-index:-1;border-radius:inherit;background:var(--ink);transition:transform .6s var(--ease-hover)}
+.btn-label{display:inline-flex;overflow:hidden;line-height:1.3}
+.btn-label span{display:inline-block;text-shadow:0 1.3em currentColor;transition:transform .6s var(--ease-hover);transition-delay:calc(var(--i) * 12ms)}
+.btn-arrow{display:inline-grid;width:1rem;height:1rem;overflow:hidden;flex:none}
+.btn-arrow svg{width:1rem;height:1rem;transition:transform .6s var(--ease-hover);filter:drop-shadow(var(--accent) 0 -1rem 0)}
+.btn:active .btn-bg{transform:scale(.92);transition-duration:.2s}
+.link-arrow{position:relative;display:inline-flex;align-items:center;min-height:3rem;font-weight:500;white-space:nowrap}
+.link-arrow::before,.link-arrow::after{content:'';position:absolute;left:0;right:0;bottom:.8125rem;height:1px;background:currentColor;transition:transform .6s var(--ease-hover)}
+.link-arrow::before{transform-origin:right;transition-delay:.25s}
+.link-arrow::after{transform-origin:left;transform:scaleX(0)}
+
+.intro{position:relative;z-index:1;display:flex;flex-direction:column;align-items:center;gap:1.25rem;text-align:center;padding-block:clamp(1rem,.25rem + 3svh,3rem) .5rem}
+.eyebrow{display:flex;align-items:center;margin:0;font-size:.9375rem;font-weight:500;color:var(--muted)}
+.eyebrow::before{content:'';width:.5rem;height:.5rem;margin-right:.5rem;border-radius:50%;background:var(--accent)}
+h1{max-width:14ch;margin:0;font:500 clamp(2.5rem,1.3rem + 4.6vw,7rem)/1 var(--display);letter-spacing:-.02em;text-wrap:balance}
+h1 em{font-style:normal;color:var(--muted)}
+.aside{display:grid;justify-items:center;gap:1.5rem}
+.aside p{max-width:44ch;margin:0;font-size:clamp(1.0625rem,.95rem + .3vw,1.25rem);line-height:1.55;color:var(--muted);text-wrap:pretty}
+.actions{display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:.5rem 1.5rem}
+
+.stage{position:relative;flex:1 1 0;min-height:15rem}
+.tf-host,.tf-frame{width:100%;height:100%}
+.tf-frame{display:grid;place-items:center;overflow:hidden;background:transparent}
+.tf-root{--tf-pad:var(--gutter);--tf-band:clamp(36px,9cqh,84px);--tf-band-top:0px;--tf-band-bottom:var(--tf-band);position:relative;width:100%;height:100%;background:var(--tf-bg);color:var(--tf-ink);overflow:hidden;outline:none;container-type:size;touch-action:pan-y;user-select:none;-webkit-user-select:none;-webkit-tap-highlight-color:transparent}
+.tf-root[data-draggable]{cursor:grab}
+.tf-root[data-dragging]{cursor:grabbing}
+.tf-root:focus-visible::after{content:'';position:absolute;inset:0;z-index:3;box-shadow:inset 0 0 0 2px var(--ink);pointer-events:none}
+.tf-gl{position:absolute;left:0;right:0;top:var(--tf-band-top);bottom:var(--tf-band-bottom);z-index:1;overflow:hidden;pointer-events:none;-webkit-mask-image:var(--tf-mask);mask-image:var(--tf-mask)}
+.tf-root{--fade:16%;--tf-mask:linear-gradient(90deg,transparent 0,rgb(0 0 0 / .12) calc(var(--fade) * .25),rgb(0 0 0 / .45) calc(var(--fade) * .5),rgb(0 0 0 / .82) calc(var(--fade) * .75),#000 var(--fade),#000 calc(100% - var(--fade)),rgb(0 0 0 / .82) calc(100% - var(--fade) * .75),rgb(0 0 0 / .45) calc(100% - var(--fade) * .5),rgb(0 0 0 / .12) calc(100% - var(--fade) * .25),transparent 100%)}
+.tf-canvas{display:block;width:100%;height:100%}
+.tf-word{position:absolute;z-index:2;bottom:calc(var(--tf-band) / 2);transform:translateY(50%);max-width:calc(50% - var(--tf-pad) * 1.5);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font:500 max(.875rem,min(1.15cqw,1.0625rem))/1 var(--body);color:var(--muted);pointer-events:none}
+.tf-bc{left:50%;transform:translate(-50%,50%);text-align:center;max-width:calc(100% - var(--tf-pad) * 2)}
+.tf-still{display:none;position:absolute;left:50%;top:50%;z-index:1;width:min(48cqh,48cqw);aspect-ratio:1;object-fit:cover;border-radius:6px;transform:translate(-50%,-50%)}
+.tf-root[data-tf-fallback] .tf-still{display:block}
+.tf-toggle{position:absolute;left:16px;top:16px;z-index:3;display:grid;place-items:center;width:44px;height:44px;padding:0;border:0;border-radius:50%;background:var(--bg);color:var(--ink);cursor:pointer;clip-path:inset(50%);opacity:0}
+.tf-toggle svg{width:16px;height:16px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round}
+.tf-toggle .tf-play,.tf-toggle[aria-pressed="true"] .tf-pause{display:none}
+.tf-toggle[aria-pressed="true"] .tf-play{display:block}
+.tf-toggle:focus-visible{clip-path:none;opacity:1;outline:2px solid var(--ink);outline-offset:2px}
+.tf-sr,.tf-live{position:absolute;width:1px;height:1px;margin:0;padding:0;overflow:hidden;clip:rect(0 0 0 0);clip-path:inset(50%);white-space:nowrap}
+
+.list{padding-block:clamp(3rem,6vw,6rem) 2rem;display:grid;gap:clamp(3.5rem,7vw,7rem)}
+.group-head{display:flex;align-items:baseline;gap:.75rem;padding-bottom:1rem;margin-bottom:1.75rem;border-bottom:1px solid var(--line)}
+.group h2{margin:0;font:500 clamp(1.75rem,1.2rem + 2vw,3.25rem)/1.05 var(--display);letter-spacing:-.015em;text-wrap:balance}
+.count{font:500 .9375rem/1 var(--body);color:var(--dim);font-variant-numeric:tabular-nums}
+.cards{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,15.5rem),1fr));gap:2.5rem 1.25rem}
+.card{display:grid;gap:.9rem}
+.card-pic{position:relative;aspect-ratio:4/5;max-width:100%;border-radius:var(--radius);overflow:hidden;background:var(--paper)}
+.card-pic img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:transform .9s var(--ease-hover)}
+.card-mono{display:grid;place-items:end start;padding:1.1rem}
+.card-mono span{font:500 clamp(1.75rem,1.2rem + 1.4vw,2.5rem)/1 var(--display);letter-spacing:-.02em;color:var(--ink)}
+.card-mono::before{content:'';position:absolute;top:1.1rem;left:1.1rem;width:.5rem;height:.5rem;border-radius:50%;background:var(--accent)}
+.card-txt{display:grid;gap:.3rem;min-width:0}
+.card h3{margin:0;font:500 1.0625rem/1.3 var(--display);text-wrap:balance}
+.card p{margin:0;font-size:.9375rem;line-height:1.45;color:var(--muted);text-wrap:pretty}
+.card .src{font-size:.8125rem;color:var(--dim)}
+.card .pr{margin-top:.2rem;font-size:.75rem;color:var(--dim);font-variant-numeric:tabular-nums}
+
+.foot{display:flex;flex-wrap:wrap;justify-content:space-between;gap:1rem 2rem;padding-block:2rem 3rem;border-top:1px solid var(--line);font-size:.8125rem;color:var(--dim)}
+.foot p{margin:0;max-width:70ch}
+
+@media (hover:hover) and (pointer:fine){
+  .brand:hover .brand-mark{transform:rotate(90deg) scale(.94)}
+  .links:hover a{color:var(--dim)}
+  .links:hover a:hover{color:var(--ink)}
+  .btn:hover .btn-bg{transform:scale(.95)}
+  .btn:hover .btn-label span{transform:translateY(-1.3em)}
+  .btn:hover .btn-arrow svg{transform:translateY(1rem)}
+  .link-arrow:hover::before{transform:scaleX(0);transition-delay:0s}
+  .link-arrow:hover::after{transform:scaleX(1);transition-delay:.25s}
+  .card:hover .card-pic img{transform:scale(1.035)}
+  .card:hover h3{text-decoration:underline;text-underline-offset:.2em;text-decoration-thickness:1px}
+}
+@media (min-width:1000px) and (min-aspect-ratio:3/2),(min-width:1000px) and (max-height:820px){
+  .intro{gap:1rem;padding-top:clamp(2rem,1rem + 5svh,5rem);padding-bottom:0}
+  h1{max-width:none;font-size:min(6.25rem,9svh,5.4vw)}
+  .aside p{max-width:62ch}
+}
+@media (min-width:1000px){ .cards{grid-template-columns:repeat(3,minmax(0,1fr));gap:3rem 1.5rem} .card-pic{aspect-ratio:5/4} }
+@media (max-width:1080px){ .status{display:none} }
+@media (max-width:860px){
+  .nav{grid-template-columns:1fr;gap:.75rem}
+  .nav-end{display:none}
+  .nav > nav{overflow-x:auto;scrollbar-width:none;margin-inline:-.6rem}
+  .nav > nav::-webkit-scrollbar{display:none}
+  .links{white-space:nowrap}
+  .links a{padding:.45rem .6rem;font-size:.9375rem}
+  .intro{gap:1rem}
+  .cards{grid-template-columns:repeat(2,minmax(0,1fr));gap:2rem .875rem}
+  .card h3{font-size:.9375rem}
+  .card p{font-size:.8125rem}
+}
+@media (max-width:760px){ .hero{height:auto;min-height:0;max-height:none} .stage{flex:none;height:min(82vw,24rem);min-height:0} .tf-root{--fade:30%} }
+@media (max-width:760px) and (max-height:740px){
+  .intro{gap:.75rem;padding-top:.5rem}
+  h1{font-size:2.25rem}
+  .aside{gap:1rem}
+  .aside p{font-size:.9375rem}
+}
+@media (prefers-reduced-motion:reduce){ *,*::before,*::after{transition:none!important} }
+</style>
+
+</head>
+<body>
+<main>
+<div class="hero">
+  <header class="nav pad">
+    <a class="brand" href="#" aria-label="Покупки, в начало"><svg class="brand-mark" viewBox="0 0 40 40" aria-hidden="true"><circle cx="20" cy="20" r="18" fill="none" stroke="#ff5a1f" stroke-width="4"/><circle cx="26" cy="20" r="8" fill="#ff5a1f"/></svg><span>Покупки</span></a>
+    <nav aria-label="Разделы"><ul class="links"><li><a href="#art">Искусство</a></li><li><a href="#light">Свет</a></li><li><a href="#home">Дом и вещи</a></li><li><a href="#bmw">BMW</a></li></ul></nav>
+    <div class="nav-end"><span class="status">Курс ЦБ на <span class="fx-date"></span></span></div>
+  </header>
+
+  <section class="stage" aria-label="Все вещи из списка">
+    <div class="tf-host"><div class="tf-frame" style="--tf-bg:#0e0d0c;--tf-ink:#f2f0eb"><div class="tf-root" tabindex="0" role="region" aria-roledescription="карусель" aria-label="Фото покупок. Тяните, листайте в сторону или используйте стрелки." data-draggable><div class="tf-gl" aria-hidden="true"></div><img class="tf-still" src="images/bodko2.jpg" alt="" draggable="false" decoding="async"><span class="tf-word tf-bc" aria-hidden="true">Тяните, чтобы смотреть</span><button type="button" class="tf-toggle" aria-pressed="false" aria-label="Остановить анимацию"><svg class="tf-pause" viewBox="0 0 16 16" aria-hidden="true"><path d="M5 3.5v9M11 3.5v9"/></svg><svg class="tf-play" viewBox="0 0 16 16" aria-hidden="true"><path d="M5 3.5l8 4.5-8 4.5z"/></svg></button><ol class="tf-sr"><li>Фото 1</li><li>Фото 2</li><li>Фото 3</li><li>Фото 4</li><li>Фото 5</li><li>Фото 6</li><li>Фото 7</li><li>Фото 8</li><li>Фото 9</li><li>Фото 10</li><li>Фото 11</li><li>Фото 12</li><li>Фото 13</li><li>Фото 14</li><li>Фото 15</li><li>Фото 16</li><li>Фото 17</li><li>Фото 18</li><li>Фото 19</li><li>Фото 20</li><li>Фото 21</li><li>Фото 22</li><li>Фото 23</li><li>Фото 24</li><li>Фото 25</li><li>Фото 26</li><li>Фото 27</li><li>Фото 28</li><li>Фото 29</li><li>Фото 30</li><li>Фото 31</li><li>Фото 32</li></ol><p class="tf-live" aria-live="polite"></p></div></div></div>
+  </section>
+</div>
+
+<div class="list pad" id="list">
+<section class="group" id="art" aria-labelledby="art-h"><div class="group-head"><h2 id="art-h">Искусство</h2><span class="count">5</span></div><ul class="cards"><li><a class="card" href="https://www.bodko.art/" target="_blank" rel="noopener"><div class="card-pic"><img src="images/bodko2.jpg" alt="" loading="lazy" decoding="async"></div><div class="card-txt"><h3>Андрей Бодько, «Всегда рядом»</h3><p>Из серии, где Христос рядом в житейских сценах. Здесь он страхует жим лёжа</p><p class="src">Через автора · t.me/iconabodko · @andrei_bodko</p><p class="pr">по запросу</p></div></a></li><li><a class="card" href="https://debellefeuille.com/viewing-room/33-veronique-locci/" target="_blank" rel="noopener"><div class="card-pic"><img src="images/locci.jpg" alt="" loading="lazy" decoding="async"></div><div class="card-txt"><h3>Вероник Локки, «Néon Bleu»</h3><p>Вогнутое тонированное зеркало, 2025</p><p class="src">Galerie de Bellefeuille, Монреаль</p><p class="pr">по запросу</p></div></a></li><li><a class="card" href="https://pixeluxe.cc/products/pixel-lens-made-to-order" target="_blank" rel="noopener"><div class="card-pic"><img src="images/popdots.jpg" alt="" loading="lazy" decoding="async"></div><div class="card-txt"><h3>Пиксельное стекло большого формата</h3><p>Стекло с сеткой квадратных линз, как у @popdots: всё, что за ним, распадается на пиксели</p><p class="src">Pixeluxe, на заказ любого размера · крупный формат по запросу: yoel@pixeluxe.cc</p><p class="pr">от <span class="fx" data-c="USD" data-v="300"></span></p></div></a></li><li><a class="card" href="https://maps.app.goo.gl/9Kp9nak1udjyV89A6" target="_blank" rel="noopener"><div class="card-pic"><img src="images/farman.jpg" alt="" loading="lazy" decoding="async"></div><div class="card-txt"><h3>Farman Aviation Antiquités, диск турбины</h3><p>Лопаточный диск реактивного двигателя на подставке, как скульптура</p><p class="src">Антиквариат из авиадеталей · Париж · только в магазине</p><p class="pr">по запросу</p></div></a></li><li><a class="card" href="https://www.ebay.com/itm/800901092352" target="_blank" rel="noopener"><div class="card-pic"><img src="images/kissinger.jpg" alt="" loading="lazy" decoding="async"></div><div class="card-txt"><h3>Генри Киссинджер, «Дипломатия» с автографом</h3><p>Первое издание Easton Press в кожаном переплёте, подписано автором</p><p class="src">eBay · продавец Attic Cat, США · доставку на Кипр уточнить у продавца</p><p class="pr"><span class="fx" data-c="USD" data-v="199"></span></p></div></a></li></ul></section><section class="group" id="light" aria-labelledby="light-h"><div class="group-head"><h2 id="light-h">Свет</h2><span class="count">7</span></div><ul class="cards"><li><a class="card" href="https://www.1stdibs.com/furniture/lighting/floor-lamps/longing-contemporary-sculptural-floor-lamp-organic-collectible-design-aoao/id-f_34498092/" target="_blank" rel="noopener"><div class="card-pic"><img src="images/aoao.jpg" alt="" loading="lazy" decoding="async"></div><div class="card-txt"><h3>AOAO, торшер Longing</h3><p>Скульптурный торшер из гипса ручной резьбы, две диммируемые LED-лампы внутри, 102×58×25 см</p><p class="src">1stDibs</p><p class="pr">по запросу</p></div></a></li><li><a class="card" href="https://side-gallery.com/sabine_marcelis_floor_lamp_model_water_from_totem_series_2021/" target="_blank" rel="noopener"><div class="card-pic"><img src="images/totemwater.jpg" alt="" loading="lazy" decoding="async"></div><div class="card-txt"><h3>Sabine Marcelis, торшер Water из серии Totem</h3><p>Литая полупрозрачная смола с неоновой подсветкой, 2021</p><p class="src">Side Gallery, Барселона</p><p class="pr">по запросу</p></div></a></li><li><a class="card" href="https://www.arteveneziana.com/contemporary/lighting/norman.html" target="_blank" rel="noopener"><div class="card-pic"><img src="images/norman.jpg" alt="" loading="lazy" decoding="async"></div><div class="card-txt"><h3>Arte Veneziana, торшер Norman</h3><p>Панель из фактурного стекла цвета морской волны с вертикальной полосой света, металлическое основание</p><p class="src">Arte Veneziana, Венеция · цена у бренда или дилеров</p><p class="pr">по запросу</p></div></a></li><li><a class="card" href="https://www.1stdibs.com/es/muebles/iluminaci%C3%B3n/l%C3%A1mparas-de-pie/t-light-resin-floorlight-with-matt-finish-by-laurids-gall%C3%A9e/id-f_45242692" target="_blank" rel="noopener"><div class="card-pic"><img src="images/pl03.jpg" alt="" loading="lazy" decoding="async"></div><div class="card-txt"><h3>Laurids Gallée, торшер из смолы</h3><p>PL03 в цвете frosted poison green или янтарная колонна</p><p class="src">Лимитированные серии · @laurids.gallee</p><p class="pr">по запросу</p></div></a></li><li><a class="card" href="https://bonne-choice.com/products/helm" target="_blank" rel="noopener"><div class="card-pic"><img src="images/helm.jpg" alt="" loading="lazy" decoding="async"></div><div class="card-txt"><h3>Dirk van der Kooij, Helm или Tol 4</h3><p>Helm: сфера Ø60 см. Tol 4: торшер из четырёх колец с латунью</p><p class="src">Bonne Choice · изготовление 10–16 недель</p><p class="pr"><span class="fx" data-c="CAD" data-v="10275" data-v2="17250"></span></p></div></a></li><li><a class="card" href="https://www.core77.com/posts/144718/A-Candle-Powered-Sculptural-Light" target="_blank" rel="noopener"><div class="card-pic"><img src="images/flare.jpg" alt="" loading="lazy" decoding="async"></div><div class="card-txt"><h3>Studio Douze Degrés, лампа Flare</h3><p>Свеча за оптической линзой, анодированный алюминий, Париж</p><p class="src">Настольная и напольная версии</p><p class="pr"><span class="fx" data-c="EUR" data-v="390"></span></p></div></a></li><li><a class="card" href="https://www.damonxstore.com/products/m%C3%B6bius-lamp-1" target="_blank" rel="noopener"><div class="card-pic"><img src="images/mobius.jpg" alt="" loading="lazy" decoding="async"></div><div class="card-txt"><h3>Damonxart, The Möbius Lamp v.02</h3><p>Оранжевая лента Мёбиуса на стальной ножке</p><p class="src">Предзаказ в Damonxstore · доставка FedEx</p><p class="pr"><span class="fx" data-c="USD" data-v="695"></span></p></div></a></li></ul></section><section class="group" id="home" aria-labelledby="home-h"><div class="group-head"><h2 id="home-h">Дом и вещи</h2><span class="count">13</span></div><ul class="cards"><li><a class="card" href="https://www.hostlerburrows.com/collection-all/gal-gaon25?view=slider#2" target="_blank" rel="noopener"><div class="card-pic"><img src="images/gaon.jpg" alt="" loading="lazy" decoding="async"></div><div class="card-txt"><h3>Гал Гаон, диван и столик</h3><p>Скульптурная мебель из тёмного дерева: диван, кресло и столик из двух частей</p><p class="src">Hostler Burrows, Нью-Йорк</p><p class="pr">по запросу</p></div></a></li><li><a class="card" href="https://www.Artemest.com/products/agatha-large-coffee-table" target="_blank" rel="noopener"><div class="card-pic"><img src="images/agatha2.jpg" alt="" loading="lazy" decoding="async"></div><div class="card-txt"><h3>Draga &amp; Aurel, Agatha Big Top Coffee Table R40</h3><p>Слоистая эпоксидная смола на раме из матовой бронзы, 90×90 см</p><p class="src">Artemest · изготовление 9–10 недель</p><p class="pr"><span class="fx" data-c="EUR" data-v="11405"></span></p></div></a></li><li><a class="card" href="https://www.brionvega.com/gb/product/radiofonografo-rr226-fo-st-white" target="_blank" rel="noopener"><div class="card-pic"><img src="images/brion.jpg" alt="" loading="lazy" decoding="async"></div><div class="card-txt"><h3>Brionvega Radiofonografo RR226 fo-st, белый</h3><p>Радиола на колёсах: радио, Bluetooth, проигрыватель Pro-Ject. Дизайн Кастильони, 1965</p><p class="src">Официальный магазин Brionvega</p><p class="pr"><span class="fx" data-c="GBP" data-v="13000"></span></p></div></a></li><li><a class="card" href="https://audio-database.com/SEIKO_EPSON/player/sigma2000.html" target="_blank" rel="noopener"><div class="card-pic"><img src="images/sigma.jpg" alt="" loading="lazy" decoding="async"></div><div class="card-txt"><h3>Seiko Epson Σ2000, проигрыватель винила</h3><p>Японский флагман: позолоченные диск, тонарм и прижим, медная панель, массивные ножки</p><p class="src">Редкий винтаж из Японии · последний лот на eBay снят 11 ноября, искать на eBay и японских аукционах</p><p class="pr">ориентир <span class="fx" data-c="USD" data-v="17400"></span></p></div></a></li><li><a class="card" href="https://vallgatan12.com/en/products/gustaf-westman-spiral-stand-chrome" target="_blank" rel="noopener"><div class="card-pic"><img src="images/spiral.jpg" alt="" loading="lazy" decoding="async"></div><div class="card-txt"><h3>Gustaf Westman, подставка Spiral Stand, хром</h3><p>Подставка для винила в виде спирали из хромированной стали, 30×35 см</p><p class="src">Vallgatan 12 · на заказ, 1–3 недели</p><p class="pr"><span class="fx" data-c="EUR" data-v="215.95"></span></p></div></a></li><li><a class="card" href="https://www.zieta.pl/en/product/bolid?variant=166" target="_blank" rel="noopener"><div class="card-pic"><img src="images/bolid.jpg" alt="" loading="lazy" decoding="async"></div><div class="card-txt"><h3>Zieta, зеркало Bolid</h3><p>Зеркальный объект в форме лонгборда из «надутой» полированной стали, 80×20 см</p><p class="src">Zieta Studio · в наличии</p><p class="pr"><span class="fx" data-c="EUR" data-v="1210"></span></p></div></a></li><li><a class="card" href="https://www.zieta.pl/en/product/plopp?variant=620" target="_blank" rel="noopener"><div class="card-pic"><img src="images/plopp.jpg" alt="" loading="lazy" decoding="async"></div><div class="card-txt"><h3>Zieta, табурет Plopp</h3><p>Табурет из «надутой» полированной нержавеющей стали, 50×35 см</p><p class="src">Zieta Studio · в наличии</p><p class="pr"><span class="fx" data-c="EUR" data-v="870"></span></p></div></a></li><li><a class="card" href="https://www.core77.com/posts/142662/Simone-Giertzs-Brilliant-Swivel-Arm-Laundry-Chair-is-Now-a-Kickstarter-Smash" target="_blank" rel="noopener"><div class="card-pic"><img src="images/chair.jpg" alt="" loading="lazy" decoding="async"></div><div class="card-txt"><h3>Simone Giertz, Laundry Chair</h3><p>Кресло с поворотной рейкой для «почти чистой» одежды</p><p class="src">Yetch · Kickstarter</p><p class="pr">от <span class="fx" data-c="USD" data-v="899"></span></p></div></a></li><li><a class="card" href="https://www.ebay.com/sch/i.html?_nkw=Virgil+Abloh+IKEA+MARKERAD+Receipt+Rug" target="_blank" rel="noopener"><div class="card-pic"><img src="images/rug.jpg" alt="" loading="lazy" decoding="async"></div><div class="card-txt"><h3>Virgil Abloh × IKEA, ковёр MARKERAD «Receipt»</h3><p>Ковёр в виде чека IKEA, коллекция 2019</p><p class="src">eBay · коллекционный</p><p class="pr">около <span class="fx" data-c="GBP" data-v="475"></span></p></div></a></li><li><a class="card" href="https://www.1stdibs.com/furniture/dining-entertaining/sterling-silver/1930-christofle-christian-fjerdingstad-coffee-tea-set-art-deco-silver-plated/id-f_29629742" target="_blank" rel="noopener"><div class="card-pic"><img src="images/fjerd.jpg" alt="" loading="lazy" decoding="async"></div><div class="card-txt"><h3>Christofle × Кристиан Фъердингстад, кофейный сервиз 1930</h3><p>Кофейник, молочник, сахарница и поднос, посеребрение, ар-деко</p><p class="src">Винтаж · 1stDibs, продавец из Франции · есть и сервиз Сабаттини 1950-х</p><p class="pr">по запросу</p></div></a></li><li><a class="card" href="http://yolo-objects.ru/" target="_blank" rel="noopener"><div class="card-pic"><img src="images/candles.jpg" alt="" loading="lazy" decoding="async"></div><div class="card-txt"><h3>YOLO OBJECTS, свечи-спички «Филумения»</h3><p>Три свечи по 35 см, подставка и большой коробок</p><p class="src">@yolo_objects</p><p class="pr">13 200 ₽</p></div></a></li><li><a class="card" href="https://musmeroom.ru/" target="_blank" rel="noopener"><div class="card-pic"><img src="images/hanger.jpg" alt="" loading="lazy" decoding="async"></div><div class="card-txt"><h3>MUSMEROOM, плечики «Лошадь» или «Борзая»</h3><p>Дуб, ручная роспись, 45×20 см, льняной чехол</p><p class="src">@musmeroom</p><p class="pr">5 900 ₽ за штуку</p></div></a></li><li><a class="card" href="https://www.mondello1962.com/products/kuboraum-mask-p8-black-matte" target="_blank" rel="noopener"><div class="card-pic"><img src="images/glasses.jpg" alt="" loading="lazy" decoding="async"></div><div class="card-txt"><h3>Kuboraum Mask P8, чёрный матовый</h3><p>Оправа под линзы, арт. P8 BMS</p><p class="src">Mondello 1962 · ждать поступления</p><p class="pr"><span class="fx" data-c="EUR" data-v="510"></span></p></div></a></li></ul></section><section class="group" id="bmw" aria-labelledby="bmw-h"><div class="group-head"><h2 id="bmw-h">BMW</h2><span class="count">7</span></div><ul class="cards"><li><a class="card" href="https://www.ebay.com/sch/i.html?_nkw=Alcantara+Carbon+Steering+Wheel+BMW+G87+M2" target="_blank" rel="noopener"><div class="card-pic"><img src="images/g87wheel.jpg" alt="" loading="lazy" decoding="async"></div><div class="card-txt"><h3>M2 G87: руль из алькантары с карбоном</h3><p>Карбоновые вставки, красная метка на 12 часов</p><p class="src">eBay · продавец liuynsport</p><p class="pr"><span class="fx" data-c="EUR" data-v="401"></span></p></div></a></li><li><a class="card" href="https://www.ebay.com/sch/i.html?_nkw=G87+M2+MP+style+dry+carbon+kidney+grille" target="_blank" rel="noopener"><div class="card-pic"><img src="images/grille2.jpg" alt="" loading="lazy" decoding="async"></div><div class="card-txt"><h3>M2 G87: ноздри MP Style из сухого карбона</h3><p>Решётка радиатора, 2023–2026</p><p class="src">eBay · продавец Bulb-Xpert</p><p class="pr"><span class="fx" data-c="EUR" data-v="250"></span></p></div></a></li><li><a class="card" href="https://www.ebay.com/itm/157275481914" target="_blank" rel="noopener"><div class="card-pic"><img src="images/seats.jpg" alt="" loading="lazy" decoding="async"></div><div class="card-txt"><h3>M2 G87: карбоновые накладки на спинки сидений</h3><p>Накладки на передние сиденья M Carbon, подходят для G87, G80, G82</p><p class="src">eBay · продавец top-auto168, Китай · доставка $180</p><p class="pr"><span class="fx" data-c="USD" data-v="988"></span></p></div></a></li><li><a class="card" href="https://www.ebay.com/itm/366593520418" target="_blank" rel="noopener"><div class="card-pic"><img src="images/mirrors.jpg" alt="" loading="lazy" decoding="async"></div><div class="card-txt"><h3>M2 G87: карбоновые корпуса зеркал</h3><p>Накладки на зеркала и основания из сухого карбона, комплект</p><p class="src">eBay · продавец fire-auto · доставка бесплатно</p><p class="pr"><span class="fx" data-c="USD" data-v="168.28"></span></p></div></a></li><li><a class="card" href="https://favorit-motors.ru/specials/service/fm/5941380/" target="_blank" rel="noopener"><div class="card-pic"><img src="images/interior.jpg" alt="" loading="lazy" decoding="async"></div><div class="card-txt"><h3>E92 335i: полировка и химчистка</h3><p>Глянцевая полировка кузова и глубокая химчистка салона</p><p class="src">FAVORIT MOTORS, Москва · пакетная акция</p><p class="pr">19 900 ₽</p></div></a></li><li><a class="card" href="https://www.leebmann24.com/be/en/component/performance-steering-wheel-030087" target="_blank" rel="noopener"><div class="card-pic"><img src="images/e92wheel.jpg" alt="" loading="lazy" decoding="async"></div><div class="card-txt"><h3>E92 335i: руль M-Sport в алькантаре</h3><p>Алькантара и перфорированная кожа, синяя метка на 12 часов, карбоновые вставки. Перетяжка своего руля или готовый</p><p class="src">Проверить по VIN · доставку в Москву уточнить</p><p class="pr"><span class="fx" data-c="EUR" data-v="300" data-v2="900"></span></p></div></a></li><li><a class="card" href="https://europremiumparts.com/en-nl/products/idrive-apple-carplay-android-auto-retrofit-kit-for-bmw-3-series-m3-e90-e92-2005-to-2013" target="_blank" rel="noopener"><div class="card-pic"><img src="images/carplay.jpg" alt="" loading="lazy" decoding="async"></div><div class="card-txt"><h3>E92 335i: беспроводной Apple CarPlay</h3><p>Модуль под штатный iDrive, версии CCC или CIC</p><p class="src">Euro Premium Parts · доставку в Москву уточнить</p><p class="pr"><span class="fx" data-c="EUR" data-v="389.9"></span></p></div></a></li></ul></section>
+</div>
+
+<footer class="foot pad" id="fx">
+  <p>Цены в валюте пересчитаны в рубли по курсу ЦБ РФ на <span class="fx-date"></span>: €1 = <span id="fxEUR"></span> ₽, $1 = <span id="fxUSD"></span> ₽, £1 = <span id="fxGBP"></span> ₽, CA$1 = <span id="fxCAD"></span> ₽. Курс подгружается с сайта ЦБ при открытии страницы.</p>
+  <p>Нажмите на вещь, чтобы открыть магазин, галерею или автора.</p>
+</footer>
+</main>
+
+<script type="importmap">{"imports":{"three":"https://cdn.jsdelivr.net/npm/three@0.180.0/build/three.module.js"}}</script>
+<script>
+const RATES={date:"18.11.2026",EUR:90.8136,USD:82.4529,CAD:57.6674,GBP:108.7306};
+(function(){
+  const nf=new Intl.NumberFormat('ru-RU'), sym={EUR:'€',USD:'$',GBP:'£',CAD:'CA$'};
+  const rub=n=>n>=1e6?(Math.round(n/1e5)/10).toString().replace('.',',')+' млн ₽':'≈ '+nf.format(Math.round(n/1000)*1000)+' ₽';
+  function render(R){
+    document.querySelectorAll('.fx').forEach(el=>{
+      const c=el.dataset.c, v=+el.dataset.v, v2=+(el.dataset.v2||0), r=R[c];
+      const orig=sym[c]+nf.format(v)+(v2?'–'+nf.format(v2):'');
+      el.textContent=v2?`${orig} · ${Math.round(v*r/1000)}–${Math.round(v2*r/1000)} тыс. ₽`:`${orig} · ${rub(v*r)}`;
+    });
+    document.querySelectorAll('.fx-date').forEach(el=>el.textContent=R.date);
+    for(const c of ['EUR','USD','GBP','CAD']) document.getElementById('fx'+c).textContent=R[c].toFixed(2).replace('.',',');
+  }
+  render(RATES);
+  const ctl=new AbortController(); setTimeout(()=>ctl.abort(),6000);
+  fetch('https://www.cbr-xml-daily.ru/daily_json.js',{signal:ctl.signal,cache:'no-store'})
+    .then(r=>r.json()).then(d=>{
+      const v=d.Valute, R={date:new Date(d.Date).toLocaleDateString('ru-RU',{timeZone:'Europe/Moscow'})};
+      for(const c of ['EUR','USD','GBP','CAD']){ if(!v[c]) throw 0; R[c]=v[c].Value/v[c].Nominal; }
+      render(R);
+    }).catch(()=>{});
+})();
+</script>
+<script type="module">
+/**
+ * Tunnel Fold Slider engine.
+ *
+ * Cards ride a closed elliptical track seen from inside: the far end of the
+ * ellipse sits deep in the frame, where the cards are small and face the
+ * viewer, and its near end wraps around behind the camera, so a card grows and
+ * turns side-on as it travels toward the lens and finally leaves the stage.
+ * The ellipse was fitted to the card sizes and positions of the reference
+ * frame, then scaled so about fifteen cards share a 16:10 stage.
+ *
+ * Two behaviours come from Fold Carousel, applied where they make physical
+ * sense on this track:
+ *  - Exit optics. Once a card is about to leave the stage, the part of the
+ *    track ahead of it is stretched quadratically, so the card smears into
+ *    horizontal streaks, its silhouette picks up a thin spectral fringe and a
+ *    haze tinted with the card's own colour bleeds around it.
+ *  - Door fold. Momentum folds every card about its leading edge like a door
+ *    in the wind, and an exact critically damped spring unfolds it when the
+ *    track slows down. At the cruise speed the cards lie flat on the track.
+ *
+ * Units: one card is CARD_W wide and tall (the default pictures are square
+ * and keep their whole composition). On a stage wider than the reference the
+ * ellipse widens just enough that a card at the side edge still fits the
+ * frame's height, so cards only ever leave through the sides. World x to the right, z toward the
+ * camera, camera at the origin looking down -z. The track maths is pure and
+ * exported so the unit tests can hold it to its contract; three.js is loaded
+ * on demand, only once a stage exists.
+ */
+
+const CARD_W = 1.8;
+const RADIUS = 0.07; // corner radius, world units
+const ELLIPSE_W = 2.5; // half width (x)
+const ELLIPSE_D = 8; // half depth (z)
+const ELLIPSE_ZC = -7.4; // centre z; the near vertex sits behind the lens
+const COLUMNS = 72; // segments along each card, so it bends with the track
+const MARGIN_U = 0.3; // haze margin around the card, in card widths
+const MARGIN_V = 0.16; // haze margin, in card heights
+const BASE_VFOV = 58; // deg, on the baseline 16:10 stage
+// Tallest a card may stand inside the frame, as a fraction of its half height.
+// The margin keeps the haze around a card off the top and bottom edges too.
+const FIT_LIMIT = 0.86;
+const PORTRAIT_VFOV = 34; // deg, a phone held upright
+const REF_HALF_HFOV = Math.atan(Math.tan((BASE_VFOV / 2) * (Math.PI / 180)) * 1.6);
+
+// Exit optics: the stretch starts EXIT_LEAD arc units before the card centre
+// reaches the stage edge, and grows with the square of the overshoot.
+const EXIT_LEAD = 1.35;
+const EXIT_STRETCH = 0.55;
+const EXIT_RAMP = 2.4;
+
+// Motion, in arc units per second.
+const CRUISE = 0.42;
+const FOLD_DEADZONE = 0.7;
+const FOLD_FULL = 7;
+const FOLD_MAX = (30 * Math.PI) / 180;
+const FOLD_OMEGA = 9; // spring angular frequency, rad/s
+const MAX_SPEED = 26;
+const EASE_BACK = 0.7; // s, momentum easing back to the cruise speed
+
+const ENGINE_DEFAULTS = {
+  images: [],
+  speed: 1,
+  playing: true,
+  gap: 1.06,
+  fold: 1,
+  flare: 1,
+  fringe: 1,
+  haze: 1,
+  draggable: true,
+  wheel: 'horizontal',
+  preview: false
+};
+
+// Arc-length table of the ellipse: x = W sin t, z = ZC - D cos t, t = 0 at the
+// far vertex, increasing toward the right side of the frame. Resampled at
+// uniform arc length so a lookup is O(1).
+function makeTrack(halfWidth = ELLIPSE_W) {
+  const n = 8192;
+  const xs = new Float64Array(n + 1);
+  const zs = new Float64Array(n + 1);
+  const ss = new Float64Array(n + 1);
+  for (let i = 0; i <= n; i++) {
+    const t = (i / n) * Math.PI * 2;
+    xs[i] = halfWidth * Math.sin(t);
+    zs[i] = ELLIPSE_ZC - ELLIPSE_D * Math.cos(t);
+    if (i > 0) ss[i] = ss[i - 1] + Math.hypot(xs[i] - xs[i - 1], zs[i] - zs[i - 1]);
+  }
+  const length = ss[n];
+  const m = 4096;
+  const ux = new Float64Array(m + 1);
+  const uz = new Float64Array(m + 1);
+  let j = 0;
+  for (let k = 0; k <= m; k++) {
+    const s = (k / m) * length;
+    while (j < n - 1 && ss[j + 1] < s) j++;
+    const f = (s - ss[j]) / (ss[j + 1] - ss[j] || 1);
+    ux[k] = xs[j] + (xs[j + 1] - xs[j]) * f;
+    uz[k] = zs[j] + (zs[j + 1] - zs[j]) * f;
+  }
+  return { halfWidth, length, half: length / 2, m, ux, uz };
+}
+const TRACK = makeTrack();
+const TRACK_LEN = TRACK.length;
+
+/** Arc folded into [-half, half), measured from the far vertex. */
+function wrapSigned(a, track = TRACK) {
+  const s = (((a + track.half) % track.length) + track.length) % track.length;
+  return s - track.half;
+}
+
+const wrapIndex = (x, n) => ((x % n) + n) % n;
+
+function trackAt(a, out = { x: 0, z: 0 }, track = TRACK) {
+  const s = ((a % track.length) + track.length) % track.length;
+  const f = (s / track.length) * track.m;
+  const i = Math.min(track.m - 1, Math.floor(f));
+  const k = f - i;
+  out.x = track.ux[i] + (track.ux[i + 1] - track.ux[i]) * k;
+  out.z = track.uz[i] + (track.uz[i + 1] - track.uz[i]) * k;
+  return out;
+}
+
+// Arc where a point on the right half of the track crosses the vertical edge
+// of the frustum for a given half horizontal field of view.
+function exitArc(halfHfov, track = TRACK) {
+  const limit = Math.tan(halfHfov);
+  const p = { x: 0, z: 0 };
+  for (let a = 0; a < track.half; a += 0.01) {
+    trackAt(a, p, track);
+    if (p.z >= -0.05 || p.x / -p.z > limit) return a;
+  }
+  return track.half;
+}
+
+/**
+ * Exit warp on the signed arc: identity inside the frame, a quadratic stretch
+ * past `start` scaled by `strength`, clamped short of the near vertex so
+ * nothing wraps around behind the camera.
+ */
+function warp(a, start, strength = 1, track = TRACK) {
+  const m = Math.abs(a);
+  if (m <= start) return a;
+  const q = m - start;
+  const w = Math.min(track.half - 0.02, start + q + EXIT_STRETCH * strength * q * q * (1 + 0.35 * q));
+  return Math.sign(a) * w;
+}
+
+/** 0 inside the frame, easing to 1 over EXIT_RAMP arc units past `start`. */
+function exitAmount(a, start) {
+  const t = Math.min(1, Math.max(0, (Math.abs(a) - start) / EXIT_RAMP));
+  return t * t * (3 - 2 * t);
+}
+
+/** One exact step of a critically damped spring toward `target`. */
+function springStep(x, v, target, dt, omega) {
+  const x0 = x - target;
+  const e = Math.exp(-omega * dt);
+  return [target + (x0 + (v + omega * x0) * dt) * e, (v - (v + omega * x0) * omega * dt) * e];
+}
+
+/** How many cards the track holds edge to edge with `gap` card widths each. */
+const cardCount = (gap, track = TRACK) => Math.max(8, Math.round(track.length / (CARD_W * gap)));
+
+/**
+ * Point of a card column at arc `a`, warped by the exit stretch and swung
+ * about the hinge point `h` by the fold angle (given as its cosine and sine).
+ */
+function cardPoint(a, h, cosF, sinF, exitStart, flare, track, out) {
+  trackAt(warp(a, exitStart, flare, track), out, track);
+  const dx = out.x - h.x;
+  const dz = out.z - h.z;
+  out.x = h.x + dx * cosF + dz * sinF;
+  out.z = h.z - dx * sinF + dz * cosF;
+  return out;
+}
+
+/**
+ * Half width of the ellipse for a frame. Where the frame's vertical edge meets
+ * the track, a card stands (CARD_W / 2) / (depth * tan(vfov / 2)) of the
+ * frame's half height, so the card fits once that point lies at least
+ * `depth` deep. Widen the ellipse until the edge ray reaches the wall that
+ * deep; stages up to about 16:9 keep the reference ellipse. Rounded up to a
+ * small step so a resize reuses the same track.
+ */
+function fitHalfWidth(aspect, vfov) {
+  const ty = Math.tan((vfov / 2) * (Math.PI / 180));
+  const depth = CARD_W / 2 / (FIT_LIMIT * ty);
+  const across = (depth + ELLIPSE_ZC) / ELLIPSE_D;
+  if (Math.abs(across) >= 1) return ELLIPSE_W;
+  const need = (ty * aspect * depth) / Math.sqrt(1 - across * across);
+  return need <= ELLIPSE_W ? ELLIPSE_W : Math.ceil(need * 20) / 20;
+}
+
+const tracks = new Map();
+function trackFor(halfWidth) {
+  if (halfWidth === ELLIPSE_W) return TRACK;
+  const key = halfWidth.toFixed(2);
+  let track = tracks.get(key);
+  if (!track) {
+    if (tracks.size >= 8) tracks.clear();
+    track = makeTrack(halfWidth);
+    tracks.set(key, track);
+  }
+  return track;
+}
+
+/**
+ * Camera for a stage: keep the reference horizontal field where the stage
+ * allows it. Portrait stages cannot hold the whole corridor, so they zoom into
+ * its middle and let the walls leave the frame sooner; very wide stages get a
+ * wider ellipse (see fitHalfWidth).
+ */
+function cameraFor(width, height) {
+  const aspect = Math.max(width, 1) / Math.max(height, 1);
+  let vfov = 2 * Math.atan(Math.tan(REF_HALF_HFOV) / aspect) * (180 / Math.PI);
+  vfov = Math.min(72, Math.max(BASE_VFOV, vfov));
+  if (aspect < 1) vfov += (PORTRAIT_VFOV - vfov) * Math.min(1, (1 - aspect) / 0.5);
+  const halfH = Math.atan(Math.tan((vfov / 2) * (Math.PI / 180)) * aspect);
+  const track = trackFor(fitHalfWidth(aspect, vfov));
+  return { aspect, vfov, track, exitStart: Math.max(1.2, exitArc(halfH, track) - EXIT_LEAD) };
+}
+
+/** The picture a card shows on a given lap, so every picture comes round. */
+const pictureFor = (card, lap, count, pictures) => wrapIndex(card - lap * count, pictures);
+
+const vertexShader = /* glsl */ `
+  attribute float exitAmt;
+  varying vec2 vUv;
+  varying float vExit;
+  void main() {
+    vUv = uv;
+    vExit = exitAmt;
+    gl_Position = projectionMatrix * viewMatrix * vec4(position, 1.0);
+  }
+`;
+
+const fragmentShader = /* glsl */ `
+  precision highp float;
+  uniform sampler2D map;
+  uniform vec2 cardSize;
+  uniform float radius;
+  uniform vec2 coverScale;
+  uniform vec3 hazeColor;
+  uniform float speedSmear;
+  uniform float smearScale;
+  uniform float fringeScale;
+  uniform float hazeScale;
+  uniform float side;
+  uniform float fade;
+  varying vec2 vUv;
+  varying float vExit;
+
+  float sdRound(vec2 uv) {
+    vec2 p = (uv - 0.5) * cardSize;
+    vec2 q = abs(p) - cardSize * 0.5 + radius;
+    return length(max(q, 0.0)) + min(max(q.x, q.y), 0.0) - radius;
+  }
+
+  vec2 cover(vec2 uv) {
+    return clamp((uv - 0.5) * coverScale + 0.5, 0.001, 0.999);
+  }
+
+  void main() {
+    float aa = fwidth(sdRound(vUv)) * 0.75 + 1e-4;
+    // Smear length in card widths: exit stretch plus a little motion blur.
+    float smear = (vExit * 0.42 + speedSmear) * smearScale;
+    float fringe = (vExit * 0.022 + speedSmear * 0.08) * fringeScale;
+
+    vec3 col = vec3(0.0);
+    vec3 cov = vec3(0.0);
+    const int TAPS = 10;
+    if (smear < 0.004) {
+      vec3 m = vec3(
+        1.0 - smoothstep(-aa, aa, sdRound(vUv + vec2(fringe, 0.0))),
+        1.0 - smoothstep(-aa, aa, sdRound(vUv)),
+        1.0 - smoothstep(-aa, aa, sdRound(vUv - vec2(fringe, 0.0)))
+      );
+      col = texture2D(map, cover(vUv)).rgb * m;
+      cov = m;
+    } else {
+      for (int i = 0; i < TAPS; i++) {
+        // Taps trail behind the direction of travel toward the edge, so the
+        // streaks pour out of the side of the stage.
+        float t = float(i) / float(TAPS - 1);
+        float o = -side * t * t * smear;
+        vec2 uvG = vUv + vec2(o, 0.0);
+        float mR = 1.0 - smoothstep(-aa, aa, sdRound(uvG + vec2(fringe, 0.0)));
+        float mG = 1.0 - smoothstep(-aa, aa, sdRound(uvG));
+        float mB = 1.0 - smoothstep(-aa, aa, sdRound(uvG - vec2(fringe, 0.0)));
+        // One fetch per tap; the fringe comes from the per-channel masks.
+        col += texture2D(map, cover(uvG)).rgb * vec3(mR, mG, mB);
+        cov += vec3(mR, mG, mB);
+      }
+      col /= float(TAPS);
+      cov /= float(TAPS);
+    }
+
+    float alpha = max(cov.r, max(cov.g, cov.b));
+    // Haze around the silhouette, tinted by the card's own colour.
+    float d = max(sdRound(vUv), 0.0);
+    float haze = hazeScale * vExit * exp(-d / 0.07) * (1.0 - alpha) * 0.38;
+    gl_FragColor = vec4((col + hazeColor * haze) * fade, (alpha + haze) * fade);
+  }
+`;
+
+function webglAvailable() {
+  try {
+    const c = document.createElement('canvas');
+    return !!(c.getContext('webgl2') || c.getContext('webgl'));
+  } catch {
+    return false;
+  }
+}
+
+function buildTunnelFoldSlider(root, config) {
+  if (!root) return null;
+  let cfg = { ...ENGINE_DEFAULTS, ...config };
+  const stage = root.querySelector('.tf-gl') ?? root;
+  const live = root.querySelector('.tf-live');
+  const toggle = root.querySelector('.tf-toggle');
+  const motionQuery = typeof matchMedia === 'function' ? matchMedia('(prefers-reduced-motion: reduce)') : null;
+  const reduced = () => motionQuery?.matches === true;
+
+  let disposed = false;
+  let scene = null;
+  const cleanups = [];
+  const listen = (target, type, handler, options) => {
+    if (!target) return;
+    target.addEventListener(type, handler, options);
+    cleanups.push(() => target.removeEventListener(type, handler, options));
+  };
+
+  // A visitor's pause outlives config edits; the author's `playing` is the
+  // default it starts from.
+  let userPaused = false;
+  const paused = () => !cfg.playing || userPaused;
+  const motion = {
+    scroll: 0,
+    velocity: CRUISE * cfg.speed,
+    direction: 1,
+    fold: 0,
+    foldVel: 0,
+    dragging: false,
+    dragVel: 0,
+    lastInput: -Infinity
+  };
+  const cruise = () => (paused() || reduced() ? 0 : CRUISE * cfg.speed * motion.direction);
+  const clampSpeed = (v) => Math.max(-MAX_SPEED, Math.min(MAX_SPEED, v));
+
+  function syncToggle() {
+    if (!toggle) return;
+    const isPaused = paused();
+    toggle.setAttribute('aria-pressed', String(isPaused));
+    toggle.setAttribute('aria-label', isPaused ? 'Запустить анимацию' : 'Остановить анимацию');
+  }
+  syncToggle();
+  listen(toggle, 'click', () => {
+    userPaused = !userPaused;
+    // Resuming an author-paused slider plays it for this visitor.
+    if (!userPaused && !cfg.playing) cfg = { ...cfg, playing: true };
+    syncToggle();
+    scene?.invalidate();
+  });
+
+  // --- input ---------------------------------------------------------------
+
+  let drag = null;
+  const interactive = () => !cfg.preview;
+  listen(root, 'pointerdown', (e) => {
+    if (!cfg.draggable || !interactive() || e.button !== 0) return;
+    if (e.target instanceof Element && e.target.closest('button')) return;
+    try { root.setPointerCapture(e.pointerId); } catch { /* synthetic events */ }
+    drag = { id: e.pointerId, x: e.clientX, t: performance.now() };
+    motion.dragging = true;
+    motion.dragVel = 0;
+    motion.velocity = 0;
+    root.setAttribute('data-dragging', '');
+    scene?.invalidate();
+  });
+  listen(root, 'pointermove', (e) => {
+    if (!drag || e.pointerId !== drag.id) return;
+    const now = performance.now();
+    const dt = Math.max(1, now - drag.t) / 1000;
+    // Arc units per pixel: the track moves roughly with the pointer near the
+    // middle of the stage.
+    const d = (e.clientX - drag.x) * (7.5 / Math.max(stage.clientWidth, 1));
+    motion.scroll += d;
+    motion.dragVel = motion.dragVel * 0.6 + (d / dt) * 0.4;
+    drag.x = e.clientX;
+    drag.t = now;
+    motion.lastInput = now;
+    scene?.invalidate();
+  });
+  const endDrag = (e) => {
+    if (!drag || e.pointerId !== drag.id) return;
+    // A release that paused before letting go carries no momentum.
+    const idle = performance.now() - drag.t > 90;
+    motion.velocity = idle ? 0 : clampSpeed(motion.dragVel);
+    if (Math.abs(motion.velocity) > 0.2) motion.direction = Math.sign(motion.velocity);
+    motion.dragging = false;
+    drag = null;
+    root.removeAttribute('data-dragging');
+    scene?.invalidate();
+  };
+  listen(root, 'pointerup', endDrag);
+  listen(root, 'pointercancel', endDrag);
+  listen(root, 'lostpointercapture', endDrag);
+
+  listen(root, 'wheel', (e) => {
+    if (!interactive() || cfg.wheel === 'off') return;
+    const horizontal = Math.abs(e.deltaX) > Math.abs(e.deltaY);
+    // Only a sideways wheel belongs to the slider unless the author opted in
+    // to the vertical one too; the page keeps scrolling otherwise.
+    if (!horizontal && cfg.wheel !== 'both') return;
+    e.preventDefault();
+    const unit = e.deltaMode === 1 ? 16 : e.deltaMode === 2 ? stage.clientHeight : 1;
+    const delta = (horizontal ? -e.deltaX : e.deltaY) * unit;
+    motion.velocity = clampSpeed(motion.velocity + delta * 0.012);
+    if (Math.abs(motion.velocity) > 0.2) motion.direction = Math.sign(motion.velocity);
+    motion.lastInput = performance.now();
+    scene?.invalidate();
+  }, { passive: false });
+
+  listen(root, 'keydown', (e) => {
+    if (!interactive() || e.target !== root) return;
+    if (e.key !== 'ArrowRight' && e.key !== 'ArrowLeft') return;
+    e.preventDefault();
+    const s = e.key === 'ArrowRight' ? 1 : -1;
+    motion.velocity = clampSpeed(motion.velocity + s * 5.5);
+    motion.direction = s;
+    motion.lastInput = performance.now();
+    scene?.invalidate();
+  });
+
+  let onScreen = true;
+  const observer = typeof IntersectionObserver === 'function'
+    ? new IntersectionObserver((entries) => {
+      onScreen = entries.some((entry) => entry.isIntersecting);
+      if (onScreen) scene?.invalidate();
+    })
+    : null;
+  observer?.observe(root);
+  cleanups.push(() => observer?.disconnect());
+  listen(document, 'visibilitychange', () => scene?.invalidate());
+  if (motionQuery?.addEventListener) listen(motionQuery, 'change', () => scene?.invalidate());
+
+  function fail() {
+    if (disposed) return;
+    root.setAttribute('data-tf-fallback', '');
+  }
+
+  // --- scene ---------------------------------------------------------------
+
+  function createScene(THREE) {
+    let renderer;
+    try {
+      renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true, powerPreference: 'high-performance' });
+    } catch {
+      fail();
+      return null;
+    }
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 1.75));
+    renderer.outputColorSpace = THREE.SRGBColorSpace;
+    // The stage colour is the root's CSS background, so a recolour never
+    // touches the GL state.
+    renderer.setClearColor(0x000000, 0);
+    const canvas = renderer.domElement;
+    canvas.className = 'tf-canvas';
+    stage.append(canvas);
+
+    const world = new THREE.Scene();
+    const camera = new THREE.PerspectiveCamera(BASE_VFOV, 1.6, 0.05, 60);
+    const loader = new THREE.TextureLoader();
+    loader.setCrossOrigin('anonymous');
+    const maxAniso = renderer.capabilities.getMaxAnisotropy();
+
+    const uvs = [];
+    const index = [];
+    for (let c = 0; c <= COLUMNS; c++) {
+      const u = -MARGIN_U + (c / COLUMNS) * (1 + 2 * MARGIN_U);
+      uvs.push(u, -MARGIN_V, u, 1 + MARGIN_V);
+      if (c < COLUMNS) {
+        const i = c * 2;
+        index.push(i, i + 2, i + 1, i + 1, i + 2, i + 3);
+      }
+    }
+
+    let cards = [];
+    let spacing = 1;
+    let track = TRACK;
+    function buildCards() {
+      for (const card of cards) {
+        world.remove(card.mesh);
+        card.mesh.geometry.dispose();
+        card.material.dispose();
+      }
+      const count = cardCount(cfg.gap, track);
+      spacing = track.length / count;
+      cards = Array.from({ length: count }, () => {
+        const geometry = new THREE.BufferGeometry();
+        const positions = new Float32Array((COLUMNS + 1) * 2 * 3);
+        const exits = new Float32Array((COLUMNS + 1) * 2);
+        geometry.setAttribute('position', new THREE.BufferAttribute(positions, 3).setUsage(THREE.DynamicDrawUsage));
+        geometry.setAttribute('exitAmt', new THREE.BufferAttribute(exits, 1).setUsage(THREE.DynamicDrawUsage));
+        geometry.setAttribute('uv', new THREE.Float32BufferAttribute(uvs, 2));
+        geometry.setIndex(index);
+        const material = new THREE.ShaderMaterial({
+          vertexShader,
+          fragmentShader,
+          transparent: true,
+          depthWrite: false,
+          depthTest: false,
+          side: THREE.DoubleSide,
+          blending: THREE.CustomBlending,
+          blendSrc: THREE.OneFactor,
+          blendDst: THREE.OneMinusSrcAlphaFactor,
+          uniforms: {
+            map: { value: null },
+            cardSize: { value: new THREE.Vector2(CARD_W, CARD_W) },
+            radius: { value: RADIUS },
+            coverScale: { value: new THREE.Vector2(1, 1) },
+            hazeColor: { value: new THREE.Color(0.5, 0.5, 0.5) },
+            speedSmear: { value: 0 },
+            smearScale: { value: 1 },
+            fringeScale: { value: 1 },
+            hazeScale: { value: 1 },
+            side: { value: 1 },
+            fade: { value: 0 }
+          }
+        });
+        const mesh = new THREE.Mesh(geometry, material);
+        mesh.frustumCulled = false;
+        mesh.visible = false;
+        world.add(mesh);
+        return { mesh, positions, exits, material, image: -1, born: 0 };
+      });
+    }
+
+    // Every picture is loaded once. The track usually holds fewer cards than
+    // there are pictures, so a card takes its next picture each time it passes
+    // behind the lens, where the swap cannot be seen, and all of them come round.
+    let pictures = [];
+    let sources = [];
+    // A picture that cannot be read (no CORS header, a broken link) becomes a
+    // neutral card instead of a hole in the corridor.
+    const blank = new THREE.DataTexture(new Uint8Array([206, 206, 206, 255]), 1, 1);
+    blank.colorSpace = THREE.SRGBColorSpace;
+    blank.needsUpdate = true;
+
+    function averageColor(image) {
+      const color = new THREE.Color(0.5, 0.5, 0.5);
+      try {
+        const c = document.createElement('canvas');
+        c.width = c.height = 8;
+        const g = c.getContext('2d', { willReadFrequently: true });
+        g.drawImage(image, 0, 0, 8, 8);
+        const d = g.getImageData(0, 0, 8, 8).data;
+        let r = 0, gg = 0, b = 0;
+        for (let i = 0; i < d.length; i += 4) { r += d[i]; gg += d[i + 1]; b += d[i + 2]; }
+        const n = d.length / 4;
+        color.setRGB(r / n / 255, gg / n / 255, b / n / 255);
+      } catch { /* keep the neutral haze */ }
+      // Push the haze toward the card's dominant hue so it reads as coloured
+      // light rather than a grey shadow.
+      const hsl = {};
+      color.getHSL(hsl);
+      color.setHSL((hsl.h + 0.04) % 1, Math.min(1, hsl.s * 1.5 + 0.15), Math.min(0.62, Math.max(0.42, hsl.l)));
+      return color;
+    }
+
+    function syncPictures() {
+      const next = cfg.images.length ? cfg.images : [];
+      if (JSON.stringify(next) === JSON.stringify(sources)) return;
+      for (const pic of pictures) pic.texture?.dispose();
+      sources = [...next];
+      for (const card of cards) card.image = -1;
+      root.removeAttribute('data-tf-loaded');
+      pictures = sources.map((src) => {
+        const pic = { texture: null, aspect: 1, haze: new THREE.Color(0.5, 0.5, 0.5), done: false };
+        loader.load(
+          src,
+          (texture) => {
+            if (disposed || !pictures.includes(pic)) { texture.dispose(); return; }
+            texture.colorSpace = THREE.SRGBColorSpace;
+            texture.anisotropy = Math.min(8, maxAniso);
+            texture.minFilter = THREE.LinearMipmapLinearFilter;
+            const img = texture.image;
+            pic.aspect = (img.naturalWidth || img.width) / (img.naturalHeight || img.height) || 1;
+            pic.haze.copy(averageColor(img));
+            pic.texture = texture;
+            pic.done = true;
+            settled();
+            invalidate();
+          },
+          undefined,
+          () => {
+            if (!pictures.includes(pic)) return;
+            pic.texture = null;
+            pic.done = true;
+            settled();
+            invalidate();
+          }
+        );
+        return pic;
+      });
+      settled();
+    }
+
+    // Every picture has answered, loaded or failed: a recording waits on this
+    // so no card fades in partway through the clip.
+    function settled() {
+      if (pictures.every((pic) => pic.done)) root.setAttribute('data-tf-loaded', '');
+    }
+
+    const coverFor = (pic, out) => out.set(pic.aspect > 1 ? 1 / pic.aspect : 1, pic.aspect > 1 ? 1 : pic.aspect);
+
+    function assignPicture(card, imageIndex, now) {
+      const pic = pictures[imageIndex];
+      if (!pic?.done) return false;
+      if (card.image !== imageIndex) {
+        const u = card.material.uniforms;
+        u.map.value = pic.texture ?? blank;
+        coverFor(pic, u.coverScale.value);
+        u.hazeColor.value.copy(pic.haze);
+        // Only the first appearance fades in; later swaps happen out of sight.
+        if (card.image === -1) card.born = now;
+        card.image = imageIndex;
+      }
+      return true;
+    }
+
+    let width = 1;
+    let height = 1;
+    let exitStart = 4;
+    function resize() {
+      width = Math.max(1, stage.clientWidth);
+      height = Math.max(1, stage.clientHeight);
+      renderer.setSize(width, height, false);
+      const cam = cameraFor(width, height);
+      camera.fov = cam.vfov;
+      camera.aspect = cam.aspect;
+      camera.updateProjectionMatrix();
+      exitStart = cam.exitStart;
+      if (cam.track !== track) {
+        // Keep the track's phase, so a resize does not jump the pictures.
+        motion.scroll *= cam.track.length / track.length;
+        track = cam.track;
+        if (cardCount(cfg.gap, track) !== cards.length) buildCards();
+        else spacing = track.length / cards.length;
+      }
+      invalidate();
+    }
+    const resizeObserver = typeof ResizeObserver === 'function' ? new ResizeObserver(resize) : null;
+    resizeObserver?.observe(stage);
+
+    const p = { x: 0, z: 0 };
+    const h = { x: 0, z: 0 };
+    let announced = -1;
+
+    function render(now, speed) {
+      const count = cards.length;
+      const n = pictures.length;
+      const calm = reduced();
+      const speedSmear = calm ? 0 : Math.min(0.12, Math.max(0, Math.abs(speed) - 2) * 0.01);
+      const hingeSign = motion.fold >= 0 ? 1 : -1;
+      let nearest = -1;
+      let nearestDist = Infinity;
+      let fading = false;
+
+      for (let i = 0; i < count; i++) {
+        const card = cards[i];
+        const { mesh, positions, exits, material } = card;
+        const raw = i * spacing + motion.scroll;
+        const centre = wrapSigned(raw, track);
+        const lap = Math.floor((raw + track.half) / track.length);
+        // Behind the lens, or the picture is still loading: skip the work.
+        if (!n || Math.abs(centre) > track.half - 1.2 || !assignPicture(card, pictureFor(i, lap, count, n), now)) {
+          mesh.visible = false;
+          continue;
+        }
+        mesh.visible = true;
+
+        // The fold belongs to the cards inside the frame. Near the lens a small
+        // swing becomes a huge sweep across the screen, so it fades out before
+        // the exit optics take over.
+        const t = Math.min(1, Math.max(0, (Math.abs(centre) - (exitStart - 4)) / 3.2));
+        const cardFold = motion.fold * (1 - t * t * (3 - 2 * t));
+        const cosF = Math.cos(cardFold);
+        const sinF = Math.sin(cardFold);
+
+        // Hinge on the leading edge (the edge the track is moving toward).
+        trackAt(warp(centre + hingeSign * CARD_W * 0.5, exitStart, cfg.flare, track), h, track);
+
+        let k = 0;
+        for (let c = 0; c <= COLUMNS; c++) {
+          const u = -MARGIN_U + (c / COLUMNS) * (1 + 2 * MARGIN_U);
+          const a = centre + (u - 0.5) * CARD_W;
+          cardPoint(a, h, cosF, sinF, exitStart, cfg.flare, track, p);
+          const { x, z } = p;
+          const ex = exitAmount(a, exitStart) * Math.min(1, cfg.flare);
+          positions[k] = x; positions[k + 1] = -CARD_W * (0.5 + MARGIN_V); positions[k + 2] = z;
+          positions[k + 3] = x; positions[k + 4] = CARD_W * (0.5 + MARGIN_V); positions[k + 5] = z;
+          exits[c * 2] = ex;
+          exits[c * 2 + 1] = ex;
+          k += 6;
+        }
+        mesh.geometry.attributes.position.needsUpdate = true;
+        mesh.geometry.attributes.exitAmt.needsUpdate = true;
+
+        trackAt(centre, p, track);
+        // Far cards are drawn first; the near, smeared ones go on top.
+        mesh.renderOrder = Math.round(-Math.hypot(p.x, p.z) * 1000);
+
+        const u = material.uniforms;
+        u.side.value = centre >= 0 ? 1 : -1;
+        u.speedSmear.value = speedSmear;
+        u.smearScale.value = (calm ? 0.25 : 1) * cfg.flare;
+        u.fringeScale.value = (calm ? 0.3 : 1) * cfg.fringe;
+        u.hazeScale.value = cfg.haze;
+        u.fade.value = Math.min(1, (now - card.born) / 600);
+        if (u.fade.value < 1) fading = true;
+
+        if (Math.abs(centre) < nearestDist) {
+          nearestDist = Math.abs(centre);
+          nearest = i;
+        }
+      }
+
+      // Announce the card at the far end only when the track settles on one
+      // after the visitor moved it; the cruise itself stays quiet.
+      if (live && !cfg.preview && nearest >= 0 && Math.abs(speed) < 1 && nearest !== announced && now - motion.lastInput < 4000) {
+        announced = nearest;
+        live.textContent = `Фото ${cards[nearest].image + 1} из ${n}`;
+      }
+
+      renderer.render(world, camera);
+      return fading;
+    }
+
+    // Frames run while the track moves or a spring settles; a paused, settled
+    // slider costs nothing, and one scrolled out of view or in a hidden tab
+    // stops until it returns.
+    let frame = 0;
+    let last = 0;
+    function tick() {
+      frame = 0;
+      if (disposed) return;
+      const now = performance.now();
+      const dt = last ? Math.min(0.05, (now - last) / 1000) : 1 / 60;
+      last = now;
+
+      const target = cruise();
+      if (!motion.dragging) {
+        motion.velocity += (target - motion.velocity) * (1 - Math.exp(-dt / EASE_BACK));
+        if (Math.abs(motion.velocity - target) < 1e-4) motion.velocity = target;
+        motion.scroll += motion.velocity * dt;
+      } else {
+        motion.dragVel *= Math.exp(-dt / 0.12);
+      }
+      const speed = motion.dragging ? motion.dragVel : motion.velocity;
+
+      // Door fold target from momentum above the cruise speed.
+      const over = Math.max(0, Math.abs(speed) - FOLD_DEADZONE) / FOLD_FULL;
+      const foldTarget = reduced() ? 0 : Math.sign(speed) * FOLD_MAX * cfg.fold * Math.min(1, over);
+      [motion.fold, motion.foldVel] = springStep(motion.fold, motion.foldVel, foldTarget, dt, FOLD_OMEGA);
+      if (Math.abs(motion.fold - foldTarget) < 1e-5 && Math.abs(motion.foldVel) < 1e-5) {
+        motion.fold = foldTarget;
+        motion.foldVel = 0;
+      }
+
+      const visible = onScreen && !document.hidden;
+      const fading = visible ? render(now, speed) : false;
+      const moving = motion.dragging || motion.velocity !== 0 || motion.foldVel !== 0 || motion.fold !== foldTarget;
+      const loading = pictures.some((pic) => !pic.done);
+      if (visible && (moving || fading || loading)) frame = requestAnimationFrame(tick);
+      else last = 0;
+    }
+    function invalidate() {
+      if (!frame && !disposed) frame = requestAnimationFrame(tick);
+    }
+
+    const lost = (e) => { e.preventDefault(); cancelAnimationFrame(frame); frame = 0; };
+    const restored = () => {
+      for (const pic of pictures) if (pic.texture) pic.texture.needsUpdate = true;
+      blank.needsUpdate = true;
+      invalidate();
+    };
+    canvas.addEventListener('webglcontextlost', lost);
+    canvas.addEventListener('webglcontextrestored', restored);
+
+    buildCards();
+    syncPictures();
+    resize();
+    root.setAttribute('data-tf-ready', '');
+
+    return {
+      invalidate,
+      renderNow() {
+        render(performance.now(), motion.velocity);
+      },
+      update(previousGap) {
+        if (cardCount(cfg.gap, track) !== cardCount(previousGap, track)) buildCards();
+        syncPictures();
+        invalidate();
+      },
+      destroy() {
+        cancelAnimationFrame(frame);
+        resizeObserver?.disconnect();
+        canvas.removeEventListener('webglcontextlost', lost);
+        canvas.removeEventListener('webglcontextrestored', restored);
+        for (const card of cards) {
+          card.mesh.geometry.dispose();
+          card.material.dispose();
+        }
+        cards = [];
+        for (const pic of pictures) pic.texture?.dispose();
+        pictures = [];
+        blank.dispose();
+        renderer.dispose();
+        // Free the context now rather than whenever the collector gets to it:
+        // an editor that rebuilds would otherwise run into the browser's cap.
+        renderer.forceContextLoss();
+        canvas.remove();
+      }
+    };
+  }
+
+  if (!webglAvailable()) {
+    fail();
+  } else {
+    import('three')
+      .then((THREE) => {
+        if (disposed) return;
+        scene = createScene(THREE);
+      })
+      .catch(fail);
+  }
+
+  return {
+    setConfig(next) {
+      if (disposed) return;
+      const previous = cfg;
+      cfg = { ...ENGINE_DEFAULTS, ...next };
+      if (cfg.playing !== previous.playing) userPaused = false;
+      syncToggle();
+      scene?.update(previous.gap);
+    },
+    // Places the track at an exact moment of its cruise, settled: no fold, no
+    // fade-in. The thumbnail recorder uses it; the editor never calls it.
+    setTime(seconds) {
+      if (disposed || !Number.isFinite(seconds)) return;
+      motion.scroll = Math.max(0, seconds) * CRUISE * cfg.speed;
+      motion.velocity = cruise();
+      motion.fold = 0;
+      motion.foldVel = 0;
+      scene?.renderNow();
+      scene?.invalidate();
+    },
+    get scroll() { return motion.scroll; },
+    destroy() {
+      disposed = true;
+      cleanups.forEach((cleanup) => cleanup());
+      cleanups.length = 0;
+      scene?.destroy();
+      scene = null;
+      root.removeAttribute('data-tf-ready');
+      root.removeAttribute('data-tf-loaded');
+      root.removeAttribute('data-dragging');
+    }
+  };
+}
+
+const root=document.querySelector('.tf-root');
+const slider=buildTunnelFoldSlider(root,{images:["images/bodko2.jpg", "images/locci.jpg", "images/popdots.jpg", "images/farman.jpg", "images/kissinger.jpg", "images/aoao.jpg", "images/totemwater.jpg", "images/norman.jpg", "images/pl03.jpg", "images/helm.jpg", "images/flare.jpg", "images/mobius.jpg", "images/gaon.jpg", "images/agatha2.jpg", "images/brion.jpg", "images/sigma.jpg", "images/spiral.jpg", "images/bolid.jpg", "images/plopp.jpg", "images/chair.jpg", "images/rug.jpg", "images/fjerd.jpg", "images/candles.jpg", "images/hanger.jpg", "images/glasses.jpg", "images/g87wheel.jpg", "images/grille2.jpg", "images/seats.jpg", "images/mirrors.jpg", "images/interior.jpg", "images/e92wheel.jpg", "images/carplay.jpg"],speed:0.85,playing:true,gap:1.06,fold:1,flare:0,fringe:0,haze:0,draggable:true,wheel:'horizontal',preview:false});
+addEventListener('pagehide',()=>slider&&slider.destroy(),{once:true});
+</script>
+
+</body>
+</html>
