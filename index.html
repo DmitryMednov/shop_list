@@ -76,17 +76,14 @@ h1 em{font-style:normal;color:var(--muted)}
 .tf-canvas{display:block;width:100%;height:100%}
 .tf-word{position:absolute;z-index:2;bottom:calc(var(--tf-band) / 2);transform:translateY(50%);max-width:calc(50% - var(--tf-pad) * 1.5);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font:500 max(.875rem,min(1.15cqw,1.0625rem))/1 var(--body);color:var(--muted);pointer-events:none}
 .tf-bc{left:50%;transform:translate(-50%,50%);text-align:center;max-width:calc(100% - var(--tf-pad) * 2)}
-.drag-hint{display:flex;align-items:center;gap:.7rem;overflow:visible;max-width:none;transition:opacity .6s ease}
-.dh-track{position:relative;display:block;width:4.5rem;height:2px;border-radius:2px;background:color-mix(in srgb,var(--logo) 28%,transparent)}
-.dh-track b{position:absolute;left:0;top:50%;width:.55rem;height:.55rem;margin-top:-.275rem;border-radius:50%;background:var(--logo);box-shadow:0 0 0 4px color-mix(in srgb,var(--logo) 18%,transparent),0 0 16px var(--logo);animation:dh-dot 1.6s cubic-bezier(.65,0,.35,1) infinite alternate}
-.dh-chev{display:block;width:.45rem;height:.45rem;border-left:2px solid var(--logo);border-bottom:2px solid var(--logo);border-radius:1px}
-.dh-l{transform:rotate(45deg);animation:dh-l 1.6s cubic-bezier(.65,0,.35,1) infinite alternate}
-.dh-r{transform:rotate(-135deg);animation:dh-r 1.6s cubic-bezier(.65,0,.35,1) infinite alternate}
-@keyframes dh-dot{from{transform:translateX(0)}to{transform:translateX(calc(4.5rem - .55rem))}}
-@keyframes dh-l{from{opacity:1;translate:-3px 0}to{opacity:.2;translate:0 0}}
-@keyframes dh-r{from{opacity:.2;translate:0 0}to{opacity:1;translate:3px 0}}
+.drag-hint{bottom:max(.6rem,calc(var(--tf-band) / 2 - 1.3rem));transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:.3rem;overflow:visible;max-width:none;transition:opacity .6s ease}
+.dh-track{position:relative;display:block;width:2px;height:1.9rem;border-radius:2px;background:color-mix(in srgb,var(--logo) 28%,transparent)}
+.dh-track b{position:absolute;left:50%;top:0;width:.5rem;height:.5rem;margin-left:-.25rem;border-radius:50%;background:var(--logo);box-shadow:0 0 0 4px color-mix(in srgb,var(--logo) 18%,transparent),0 0 16px var(--logo);animation:dh-dot 1.8s cubic-bezier(.65,0,.35,1) infinite}
+.dh-chev{display:block;width:.5rem;height:.5rem;border-left:2px solid var(--logo);border-bottom:2px solid var(--logo);border-radius:1px;transform:rotate(-45deg);animation:dh-chev 1.8s cubic-bezier(.65,0,.35,1) infinite}
+@keyframes dh-dot{0%{transform:translateY(0);opacity:0}15%{opacity:1}75%{opacity:1}100%{transform:translateY(calc(1.9rem - .5rem));opacity:0}}
+@keyframes dh-chev{0%,55%{opacity:.25;translate:0 -2px}80%{opacity:1;translate:0 2px}100%{opacity:.25;translate:0 -2px}}
 .tf-root.touched .drag-hint{opacity:0}
-@media (prefers-reduced-motion:reduce){ .dh-track b{animation:none;left:calc(50% - .275rem)} .dh-chev{animation:none;opacity:.6} }
+@media (prefers-reduced-motion:reduce){ .dh-track b{animation:none;top:calc(50% - .25rem)} .dh-chev{animation:none;opacity:.6} }
 .tf-still{display:none;position:absolute;left:50%;top:50%;z-index:1;width:min(48cqh,48cqw);aspect-ratio:1;object-fit:cover;border-radius:6px;transform:translate(-50%,-50%)}
 .tf-root[data-tf-fallback] .tf-still{display:block}
 .tf-toggle{position:absolute;left:16px;top:16px;z-index:3;display:grid;place-items:center;width:44px;height:44px;padding:0;border:0;border-radius:50%;background:var(--bg);color:var(--ink);cursor:pointer;clip-path:inset(50%);opacity:0}
@@ -167,7 +164,7 @@ main{padding-bottom:clamp(3rem,8vw,6rem)}
   </header>
 
   <section class="stage" aria-label="Все вещи из списка">
-    <div class="tf-host"><div class="tf-frame" style="--tf-bg:#0e0d0c;--tf-ink:#f2f0eb"><div class="tf-root" tabindex="0" role="region" aria-roledescription="карусель" aria-label="Фото покупок. Тяните, листайте в сторону или используйте стрелки." data-draggable><div class="tf-gl" aria-hidden="true"></div><img class="tf-still" src="images/bodko2.jpg" alt="" draggable="false" decoding="async"><span class="tf-word tf-bc drag-hint" aria-hidden="true"><i class="dh-chev dh-l"></i><i class="dh-track"><b></b></i><i class="dh-chev dh-r"></i></span><button type="button" class="tf-toggle" aria-pressed="false" aria-label="Остановить анимацию"><svg class="tf-pause" viewBox="0 0 16 16" aria-hidden="true"><path d="M5 3.5v9M11 3.5v9"/></svg><svg class="tf-play" viewBox="0 0 16 16" aria-hidden="true"><path d="M5 3.5l8 4.5-8 4.5z"/></svg></button><ol class="tf-sr"><li>Фото 1</li><li>Фото 2</li><li>Фото 3</li><li>Фото 4</li><li>Фото 5</li><li>Фото 6</li><li>Фото 7</li><li>Фото 8</li><li>Фото 9</li><li>Фото 10</li><li>Фото 11</li><li>Фото 12</li><li>Фото 13</li><li>Фото 14</li><li>Фото 15</li><li>Фото 16</li><li>Фото 17</li><li>Фото 18</li><li>Фото 19</li><li>Фото 20</li><li>Фото 21</li><li>Фото 22</li><li>Фото 23</li><li>Фото 24</li><li>Фото 25</li><li>Фото 26</li><li>Фото 27</li><li>Фото 28</li><li>Фото 29</li><li>Фото 30</li><li>Фото 31</li><li>Фото 32</li><li>Фото 33</li><li>Фото 34</li></ol><p class="tf-live" aria-live="polite"></p></div></div></div>
+    <div class="tf-host"><div class="tf-frame" style="--tf-bg:#0e0d0c;--tf-ink:#f2f0eb"><div class="tf-root" tabindex="0" role="region" aria-roledescription="карусель" aria-label="Фото покупок. Тяните, листайте в сторону или используйте стрелки." data-draggable><div class="tf-gl" aria-hidden="true"></div><img class="tf-still" src="images/bodko2.jpg" alt="" draggable="false" decoding="async"><span class="tf-word tf-bc drag-hint" aria-hidden="true"><i class="dh-track"><b></b></i><i class="dh-chev"></i></span><button type="button" class="tf-toggle" aria-pressed="false" aria-label="Остановить анимацию"><svg class="tf-pause" viewBox="0 0 16 16" aria-hidden="true"><path d="M5 3.5v9M11 3.5v9"/></svg><svg class="tf-play" viewBox="0 0 16 16" aria-hidden="true"><path d="M5 3.5l8 4.5-8 4.5z"/></svg></button><ol class="tf-sr"><li>Фото 1</li><li>Фото 2</li><li>Фото 3</li><li>Фото 4</li><li>Фото 5</li><li>Фото 6</li><li>Фото 7</li><li>Фото 8</li><li>Фото 9</li><li>Фото 10</li><li>Фото 11</li><li>Фото 12</li><li>Фото 13</li><li>Фото 14</li><li>Фото 15</li><li>Фото 16</li><li>Фото 17</li><li>Фото 18</li><li>Фото 19</li><li>Фото 20</li><li>Фото 21</li><li>Фото 22</li><li>Фото 23</li><li>Фото 24</li><li>Фото 25</li><li>Фото 26</li><li>Фото 27</li><li>Фото 28</li><li>Фото 29</li><li>Фото 30</li><li>Фото 31</li><li>Фото 32</li><li>Фото 33</li><li>Фото 34</li></ol><p class="tf-live" aria-live="polite"></p></div></div></div>
   </section>
 </div>
 
@@ -1075,7 +1072,7 @@ function buildTunnelFoldSlider(root, config) {
 }
 
 const root=document.querySelector('.tf-root');
-for(const ev of ['pointerdown','wheel','keydown']) root.addEventListener(ev,()=>root.classList.add('touched'),{once:true,passive:true});
+const hide=()=>{if(scrollY>40){root.classList.add('touched');removeEventListener('scroll',hide)}};addEventListener('scroll',hide,{passive:true});
 const slider=buildTunnelFoldSlider(root,{images:["images/bodko2.jpg", "images/locci.jpg", "images/popdots.jpg", "images/farman.jpg", "images/putrella.jpg", "images/kissinger.jpg", "images/aoao.jpg", "images/totemwater.jpg", "images/norman.jpg", "images/pl03.jpg", "images/helm.jpg", "images/flare.jpg", "images/mobius.jpg", "images/gaon.jpg", "images/agatha2.jpg", "images/bolid.jpg", "images/plopp.jpg", "images/chair.jpg", "images/brion.jpg", "images/sigma.jpg", "images/klipsch.jpg", "images/spiral.jpg", "images/glasses.jpg", "images/candles.jpg", "images/hanger.jpg", "images/rug.jpg", "images/fjerd.jpg", "images/g87wheel.jpg", "images/grille2.jpg", "images/seats.jpg", "images/mirrors.jpg", "images/interior.jpg", "images/e92wheel.jpg", "images/carplay.jpg"],speed:0.85,playing:true,gap:1.06,fold:1,flare:0,fringe:0,haze:0,draggable:true,wheel:'horizontal',preview:false});
 addEventListener('pagehide',()=>slider&&slider.destroy(),{once:true});
 </script>
