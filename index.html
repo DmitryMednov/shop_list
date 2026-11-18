@@ -11,7 +11,7 @@
 <meta property="og:image" content="https://dmitrymednov.github.io/shop_list/images/aoao.jpg">
 <meta property="og:url" content="https://dmitrymednov.github.io/shop_list/">
 <meta property="og:type" content="website">
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 40'%3E%3Ccircle cx='20' cy='20' r='18' fill='none' stroke='%23ff5a1f' stroke-width='4'/%3E%3Ccircle cx='26' cy='20' r='8' fill='%23ff5a1f'/%3E%3C/svg%3E">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 -56 323 323'><path fill-rule='evenodd' clip-rule='evenodd' d='M41.9624 0.834229H0.720917V210.937H41.9624V86.5824C53.4272 92.1713 66.0695 93.4544 76.7919 93.4544H94.1586V210.937H135.4V93.4544H142.485C155.549 93.4544 167.44 98.8192 176.075 107.461C184.709 116.103 190.069 128.007 190.069 141.082V210.937H232.367V141.082C232.367 116.32 222.261 93.824 205.98 77.5285C189.7 61.233 167.224 51.1178 142.485 51.1178H76.7259C67.8829 51.1178 41.9624 43.6428 41.9624 15.5291V0.834229Z' fill='%232CB0A8'/><path d='M292.688 210.442C309.362 210.442 322.879 196.913 322.879 180.224C322.879 163.534 309.362 150.005 292.688 150.005C276.014 150.005 262.497 163.534 262.497 180.224C262.497 196.913 276.014 210.442 292.688 210.442Z' fill='%232CB0A8'/></svg>">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=Inter+Tight:wght@500;600&display=swap&subset=cyrillic">
@@ -36,7 +36,7 @@ a{color:inherit;text-decoration:none}
 .hero{position:relative;isolation:isolate;display:flex;flex-direction:column;height:calc(100svh - env(safe-area-inset-top,0px) - env(safe-area-inset-bottom,0px));min-height:36rem;max-height:62rem;overflow:hidden}
 .nav{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:1.5rem;padding-block:1.25rem}
 .brand{display:inline-flex;align-items:center;gap:.7rem;justify-self:start;font:500 1.1875rem/1 var(--display)}
-.brand-mark{width:1.75rem;height:1.75rem;flex:none;transition:transform .6s var(--ease-hover)}
+.brand-mark{width:auto;height:1.3rem;flex:none;transition:transform .6s var(--ease-hover)}
 .links{display:flex;gap:.125rem;margin:0;padding:0;list-style:none}
 .links a{display:block;padding:.5rem .85rem;border-radius:var(--radius);color:var(--muted);transition:color .3s ease-out}
 .nav-end{justify-self:end;display:flex;align-items:center;gap:1.25rem}
@@ -106,7 +106,7 @@ h1 em{font-style:normal;color:var(--muted)}
 .foot p{margin:0;max-width:70ch}
 
 @media (hover:hover) and (pointer:fine){
-  .brand:hover .brand-mark{transform:rotate(90deg) scale(.94)}
+  .brand:hover .brand-mark{transform:scale(.94)}
   .links:hover a{color:var(--dim)}
   .links:hover a:hover{color:var(--ink)}
   .btn:hover .btn-bg{transform:scale(.95)}
@@ -151,7 +151,7 @@ h1 em{font-style:normal;color:var(--muted)}
 <main>
 <div class="hero">
   <header class="nav pad">
-    <a class="brand" href="#" aria-label="Покупки, в начало"><svg class="brand-mark" viewBox="0 0 40 40" aria-hidden="true"><circle cx="20" cy="20" r="18" fill="none" stroke="#ff5a1f" stroke-width="4"/><circle cx="26" cy="20" r="8" fill="#ff5a1f"/></svg><span>Покупки</span></a>
+    <a class="brand" href="#" aria-label="Покупки, в начало"><svg class="brand-mark" viewBox="0 0 323 211" fill="none" aria-hidden="true"><path fill-rule="evenodd" clip-rule="evenodd" d="M41.9624 0.834229H0.720917V210.937H41.9624V86.5824C53.4272 92.1713 66.0695 93.4544 76.7919 93.4544H94.1586V210.937H135.4V93.4544H142.485C155.549 93.4544 167.44 98.8192 176.075 107.461C184.709 116.103 190.069 128.007 190.069 141.082V210.937H232.367V141.082C232.367 116.32 222.261 93.824 205.98 77.5285C189.7 61.233 167.224 51.1178 142.485 51.1178H76.7259C67.8829 51.1178 41.9624 43.6428 41.9624 15.5291V0.834229Z" fill="#2CB0A8"/><path d="M292.688 210.442C309.362 210.442 322.879 196.913 322.879 180.224C322.879 163.534 309.362 150.005 292.688 150.005C276.014 150.005 262.497 163.534 262.497 180.224C262.497 196.913 276.014 210.442 292.688 210.442Z" fill="#2CB0A8"/></svg><span>Покупки</span></a>
     <nav aria-label="Разделы"><ul class="links"><li><a href="#art">Искусство</a></li><li><a href="#light">Свет</a></li><li><a href="#home">Дом и вещи</a></li><li><a href="#bmw">BMW</a></li></ul></nav>
     <div class="nav-end"><span class="status">Курс ЦБ на <span class="fx-date"></span></span></div>
   </header>
